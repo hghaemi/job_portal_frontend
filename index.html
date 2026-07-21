@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>سامانه کاریابی</title>
+</head>
+<body>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+
+
+    if (storage.getAccess()) {
+      window.location.href = "dashboard.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

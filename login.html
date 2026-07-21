@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورود | سامانه کاریابی</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="logo">سامانه کاریابی</div>
+      <div class="subtitle">برای ورود، ایمیل و رمز عبور خود را وارد کنید</div>
+
+      <div id="alert-box"></div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="email">ایمیل <span class="required-mark">*</span></label>
+          <input type="email" id="email" required placeholder="example@mail.com" />
+        </div>
+        <div class="form-group">
+          <label for="password">رمز عبور <span class="required-mark">*</span></label>
+          <input type="password" id="password" required placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">ورود</button>
+      </form>
+
+      <div class="auth-footer">
+        حساب کاربری ندارید؟ <a href="register.html" style="color: var(--color-primary); font-weight: 600;">ثبت‌نام کنید</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/errors-fa.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages/login.js"></script>
+</body>
+</html>

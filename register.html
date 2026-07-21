@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ثبت‌نام | سامانه کاریابی</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="logo">سامانه کاریابی</div>
+      <div class="subtitle">حساب کاربری جدید بسازید</div>
+
+      <div id="alert-box"></div>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label for="role">نوع حساب کاربری</label>
+          <select id="role" required>
+            <option value="jobseeker">کارجو هستم</option>
+            <option value="company">شرکت / کارفرما هستم</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="username">نام کاربری</label>
+          <input type="text" id="username" required placeholder="مثلاً ali_dev" />
+        </div>
+        <div class="form-group">
+          <label for="email">ایمیل</label>
+          <input type="email" id="email" required placeholder="example@mail.com" />
+        </div>
+        <div class="form-group">
+          <label for="password">رمز عبور</label>
+          <input type="password" id="password" required />
+          <div id="password-strength-box"></div>
+        </div>
+        <div class="form-group">
+          <label for="password_confirm">تکرار رمز عبور</label>
+          <input type="password" id="password_confirm" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">ساخت حساب</button>
+      </form>
+
+      <div class="auth-footer">
+        قبلاً ثبت‌نام کرده‌اید؟ <a href="login.html" style="color: var(--color-primary); font-weight: 600;">وارد شوید</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/errors-fa.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages/register.js"></script>
+</body>
+</html>
