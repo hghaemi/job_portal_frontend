@@ -29,15 +29,15 @@ async function renderCompanyDashboard(content) {
 
     <div class="grid grid-cols-3" style="margin: 20px 0;">
       <div class="stat-card">
-        <div class="stat-value">${stats.total_postings}</div>
+        <div class="stat-value">${toPersianDigits(stats.total_postings)}</div>
         <div class="stat-label">تعداد کل آگهی‌ها</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${byStatus.published || 0}</div>
+        <div class="stat-value">${toPersianDigits(byStatus.published || 0)}</div>
         <div class="stat-label">آگهی‌های منتشرشده</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${stats.total_applications_received}</div>
+        <div class="stat-value">${toPersianDigits(stats.total_applications_received)}</div>
         <div class="stat-label">کل درخواست‌های دریافتی</div>
       </div>
     </div>
@@ -48,7 +48,7 @@ async function renderCompanyDashboard(content) {
         ${
           Object.keys(appByStatus).length
             ? Object.entries(appByStatus)
-                .map(([status, count]) => `<div class="detail-row"><span>${renderBadge(status)}</span><span>${count}</span></div>`)
+                .map(([status, count]) => `<div class="detail-row"><span>${renderBadge(status)}</span><span>${toPersianDigits(count)}</span></div>`)
                 .join("")
             : `<p class="text-muted">هنوز درخواستی دریافت نشده است.</p>`
         }
@@ -63,7 +63,7 @@ async function renderCompanyDashboard(content) {
                   (job) => `
                 <div class="detail-row">
                   <a href="job-detail.html?id=${job.id}">${job.title}</a>
-                  <span>${job.applications_count} درخواست</span>
+                  <span>${toPersianDigits(job.applications_count)} درخواست</span>
                 </div>`
                 )
                 .join("")
@@ -88,15 +88,15 @@ async function renderJobSeekerDashboard(content) {
 
     <div class="grid grid-cols-3" style="margin: 20px 0;">
       <div class="stat-card">
-        <div class="stat-value">${stats.total_applications}</div>
+        <div class="stat-value">${toPersianDigits(stats.total_applications)}</div>
         <div class="stat-label">تعداد کل درخواست‌ها</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${byStatus.pending || 0}</div>
+        <div class="stat-value">${toPersianDigits(byStatus.pending || 0)}</div>
         <div class="stat-label">در انتظار بررسی</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${byStatus.accepted || 0}</div>
+        <div class="stat-value">${toPersianDigits(byStatus.accepted || 0)}</div>
         <div class="stat-label">پذیرفته‌شده</div>
       </div>
     </div>

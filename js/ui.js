@@ -218,3 +218,9 @@ function validateRequired(rules) {
   }
   return null;
 }
+
+
+function toPersianDigits(input) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  return String(input).replace(/[0-9]/g, (d) => persianDigits[d]);
+}
