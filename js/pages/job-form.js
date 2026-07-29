@@ -66,7 +66,8 @@ async function main() {
 
         <div class="form-group">
           <label for="responsibilities">مسئولیت‌ها <span class="required-mark">*</span></label>
-          <textarea id="responsibilities" required>${existingJob ? existingJob.responsibilities : ""}</textarea>        </div>
+          <textarea id="responsibilities" required>${existingJob ? existingJob.responsibilities : ""}</textarea>
+        </div>
 
         <div class="form-row">
           <div class="form-group">
@@ -126,8 +127,6 @@ async function main() {
     </div>
   `;
 
-
-  
   try {
     attachJalaliDatePicker(
       "application_deadline_display",
@@ -160,6 +159,7 @@ async function main() {
       const responsibilities = document.getElementById("responsibilities").value.trim();
       const category = document.getElementById("category").value;
       const isRemote = document.getElementById("is_remote").checked;
+      const applicationDeadline = document.getElementById("application_deadline").value;
 
       const rules = [
         { value: title, message: "وارد کردن «عنوان شغل» الزامی است." },
@@ -185,21 +185,28 @@ async function main() {
         return;
       }
 
+      if (!editingJobId && applicationDeadline) {
+        const todayISO = new Date().toISOString().split("T")[0];
+        if (applicationDeadline < todayISO) {
+          showAlert("alert-box", "مهلت ارسال درخواست نمی‌تواند تاریخی در گذشته باشد.", "error");
+          return;
+        }
+      }
+
       setButtonLoading(btn, true);
 
       const payload = {
         title,
         category: category || null,
-
         location,
         description,
         requirements,
-        responsibilities: document.getElementById("responsibilities").value,
+        responsibilities,
         job_type: document.getElementById("job_type").value,
         experience_level: document.getElementById("experience_level").value,
         salary_min: salaryMin,
         salary_max: salaryMax,
-        application_deadline: document.getElementById("application_deadline").value || null,
+        application_deadline: applicationDeadline || null,
         status: document.getElementById("status").value,
         is_remote: isRemote,
       };

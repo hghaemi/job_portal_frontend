@@ -63,6 +63,7 @@ const MESSAGE_TRANSLATIONS = [
   [/Location is required unless the job is remote./i, "آدرس شرکت برای موقعیت های شغلی که دورکاری نیستند الزامی هستند. آدرس شرکت را در بخش پروفایل تکمیل کنید."],
   [/No JobApplication matches the given query./i, "چنین درخواست شغلی وجود ندارد."],
   [/the application deadline for this job has passed/i, "مهلت ارسال درخواست برای این آگهی به پایان رسیده است."],
+  [/application deadline cannot be in the past/i, "مهلت ارسال درخواست نمی‌تواند تاریخی در گذشته باشد."],
   
 ];
 
