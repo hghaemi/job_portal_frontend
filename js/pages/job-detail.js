@@ -29,6 +29,11 @@ async function main() {
 }
 
 function renderJob(content, job, user, isOwnerCompany, existingApplication) {
+  // آیا مهلت ارسال درخواست گذشته؟ فقط وقتی مهلتی اصلاً تعیین شده باشد چک می‌کنیم.
+  // مقایسه با "امروز، ساعت ۰۰:۰۰" انجام می‌شود تا خودِ روز آخر مهلت هم مجاز باشد.
+  const todayMidnight = new Date(new Date().toDateString());
+  const deadlinePassed = !!(job.application_deadline && new Date(job.application_deadline) < todayMidnight);
+
   content.innerHTML = `
     <div class="page-header">
       <div class="company-header">
@@ -59,7 +64,10 @@ function renderJob(content, job, user, isOwnerCompany, existingApplication) {
           ? `<div class="detail-row"><span>بازه حقوق</span><span>${job.salary_min ?? "?"} تا ${job.salary_max ?? "?"}</span></div>`
           : ""
       }
-      <div class="detail-row"><span>مهلت ارسال درخواست</span><span>${formatDate(job.application_deadline)}</span></div>
+      <div class="detail-row">
+        <span>مهلت ارسال درخواست</span>
+        <span>${formatDate(job.application_deadline)} ${deadlinePassed ? renderBadge("closed") : ""}</span>
+      </div>
       ${
         isOwnerCompany
           ? `<div class="detail-row"><span>تعداد درخواست‌های دریافتی</span><span>${job.applications_count}</span></div>`
@@ -103,7 +111,7 @@ function renderJob(content, job, user, isOwnerCompany, existingApplication) {
     `;
     document.getElementById("delete-btn").addEventListener("click", () => deleteJob(job.id));
   } else if (user.role === "jobseeker" && job.status === "published" && existingApplication) {
-
+    // کارجو قبلاً برای همین آگهی درخواست داده — دیگر دکمه‌ی ارسال نشان داده نمی‌شود
     actionArea.innerHTML = `
       <div class="card">
         <div class="card-title">وضعیت درخواست شما</div>
@@ -114,8 +122,16 @@ function renderJob(content, job, user, isOwnerCompany, existingApplication) {
         </div>
       </div>
     `;
+  } else if (user.role === "jobseeker" && job.status === "published" && deadlinePassed) {
+    // مهلت ارسال درخواست گذشته — فرم اصلاً نشان داده نمی‌شود
+    actionArea.innerHTML = `
+      <div class="card">
+        <div class="card-title">مهلت ارسال درخواست به پایان رسیده</div>
+        <p class="text-muted">متأسفانه مهلت ارسال درخواست برای این آگهی (${formatDate(job.application_deadline)}) به پایان رسیده و دیگر امکان ارسال درخواست جدید وجود ندارد.</p>
+      </div>
+    `;
   } else if (user.role === "jobseeker" && job.status === "published") {
-
+    // کارجو: فرم ارسال درخواست
     actionArea.innerHTML = `
       <div class="card">
         <div class="card-title">ارسال درخواست برای این شغل</div>
