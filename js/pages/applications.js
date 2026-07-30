@@ -51,7 +51,16 @@ function renderList(applications, user) {
             ${user.role === "jobseeker" ? `<td>${app.company_name || "-"}</td>` : ""}
             <td>${renderBadge(app.status)}</td>
             <td>${formatDate(app.applied_at)}</td>
-            <td><a href="application-detail.html?id=${app.id}" class="btn btn-sm">مشاهده جزئیات</a></td>
+            <td>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <a href="application-detail.html?id=${app.id}" class="btn btn-sm">مشاهده جزئیات درخواست</a>
+                ${
+                  user.role === "jobseeker"
+                    ? `<a href="job-detail.html?id=${app.job}" class="btn btn-sm btn-ghost">مشاهده آگهی</a>`
+                    : ""
+                }
+              </div>
+            </td>
           </tr>
         `
           )

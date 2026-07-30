@@ -224,3 +224,43 @@ function toPersianDigits(input) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return String(input).replace(/[0-9]/g, (d) => persianDigits[d]);
 }
+
+
+
+(function setupPersianDigitAutoConvert() {
+  const PERSIAN_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "INPUT", "TEXTAREA"]);
+
+  function convertNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const parentTag = node.parentElement ? node.parentElement.tagName : "";
+      if (SKIP_TAGS.has(parentTag)) return;
+      if (/[0-9]/.test(node.nodeValue)) {
+        node.nodeValue = node.nodeValue.replace(/[0-9]/g, (d) => PERSIAN_DIGITS[d]);
+      }
+      return;
+    }
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      if (SKIP_TAGS.has(node.tagName)) return;
+      node.childNodes.forEach(convertNode);
+    }
+  }
+
+  function start() {
+    convertNode(document.body); 
+
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        mutation.addedNodes.forEach(convertNode);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start(); 
+  }
+})();
